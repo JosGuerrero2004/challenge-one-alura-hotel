@@ -56,7 +56,7 @@ public class MenuPrincipal extends JFrame {
 
 		
 		Panel panel = new Panel();
-		panel.setBackground(SystemColor.window);
+		panel.setBackground(new Color(238, 238, 238));
 		panel.setBounds(0, 0, 910, 537);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -77,14 +77,15 @@ public class MenuPrincipal extends JFrame {
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblCopyR = new JLabel("Desarrollado por Fulanita de Tal © 2023");
-		lblCopyR.setBounds(315, 11, 284, 19);
+		JLabel lblCopyR = new JLabel("Desarrollado por JosGuerrero © 2023");
+		lblCopyR.setBounds(315, 11, 302, 19);
 		lblCopyR.setForeground(new Color(240, 248, 255));
 		lblCopyR.setFont(new Font("Roboto", Font.PLAIN, 16));
 		panel_1.add(lblCopyR);
 		
 		//Barra para controlar la ventana 
 		JPanel header = new JPanel();
+		header.setBorder(null);
 		header.setBounds(0, 0, 910, 36);
 		header.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
@@ -100,7 +101,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		header.setLayout(null);
-		header.setBackground(Color.WHITE);
+		header.setBackground(new Color(238, 238, 238));
 		panel.add(header);
 		
 		//Botón salir
@@ -113,21 +114,22 @@ public class MenuPrincipal extends JFrame {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnexit.setBackground(Color.red);
-				labelExit.setForeground(Color.white);
+				labelExit.setForeground(new Color(238, 238, 238));
 			}			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				 btnexit.setBackground(Color.white);
+				 btnexit.setBackground(new Color(238, 238, 238));
 			     labelExit.setForeground(Color.black);
 			}
 		});
 		btnexit.setLayout(null);
 		btnexit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-		btnexit.setBackground(Color.WHITE);
+		btnexit.setBackground(new Color(238, 238, 238));
 		btnexit.setBounds(857, 0, 53, 36);
 		header.add(btnexit);
 		
 		labelExit = new JLabel("X");
+		labelExit.setBackground(new Color(238, 238, 238));
 		labelExit.setBounds(0, 0, 53, 36);
 		btnexit.add(labelExit);
 		labelExit.setHorizontalAlignment(SwingConstants.CENTER);
@@ -146,7 +148,7 @@ public class MenuPrincipal extends JFrame {
 		});
 		btnLogin.setLayout(null);
 		btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-		btnLogin.setBackground(SystemColor.window);
+		btnLogin.setBackground(new Color(238, 238, 238));
 		panel.add(btnLogin);
 		
 		JLabel imagenLogin = new JLabel("");

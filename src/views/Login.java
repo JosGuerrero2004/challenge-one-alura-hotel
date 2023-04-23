@@ -229,7 +229,7 @@ public class Login extends JFrame {
 			}
 		});
 		header.setBackground(SystemColor.window);
-		header.setBounds(0, 0, 784, 36);
+		header.setBounds(0, 0, 788, 36);
 		panel.add(header);
 		header.setLayout(null);
 	}
@@ -243,7 +243,7 @@ public class Login extends JFrame {
 	        if(txtUsuario.getText().equals(Usuario) && contrase.equals(Contraseña)){
 	            MenuUsuario menu = new MenuUsuario();
 	            menu.setVisible(true);
-	            dispose();	 
+	            dispose();
 	        }else {
 	            JOptionPane.showMessageDialog(this, "Usuario o Contraseña no válidos");
 	        }

@@ -11,5 +11,14 @@
 	<classpathentry kind="lib" path="/home/josias/Descargas/jcalendar-1.4/lib/jgoodies-looks-2.4.1.jar"/>
 	<classpathentry kind="lib" path="/home/josias/Descargas/jcalendar-1.4/lib/junit-4.6.jar"/>
 	<classpathentry kind="lib" path="/home/josias/.m2/repository/mysql/mysql-connector-java/8.0.26/mysql-connector-java-8.0.26.jar"/>
+	<classpathentry kind="lib" path="/home/josias/.m2/repository/com/mchange/c3p0/0.9.5.5/c3p0-0.9.5.5.jar" sourcepath="/home/josias/.m2/repository/com/mchange/c3p0/0.9.5.5/c3p0-0.9.5.5-sources.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="com.mchange"/>
+			<attribute name="maven.artifactId" value="c3p0"/>
+			<attribute name="maven.version" value="0.9.5.5"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
