@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+
 public class ConnectionFactory {
 	
 	private DataSource dataSource;
@@ -14,7 +15,7 @@ public class ConnectionFactory {
 	public ConnectionFactory() {
 		ComboPooledDataSource pooledDataSource = new ComboPooledDataSource();
 		
-		pooledDataSource.setJdbcUrl("jdbc:mysql://localhost/ALURA-HOTEL?useTimeZone=true&serverTimeZone=UTC");
+		pooledDataSource.setJdbcUrl("jdbc:mysql://localhost/alura-hotel?useTimeZone=true&serverTimeZone=UTC");
 		pooledDataSource.setUser("root");
 		pooledDataSource.setPassword("ADMIN123");
 		pooledDataSource.setMaxPoolSize(10);
