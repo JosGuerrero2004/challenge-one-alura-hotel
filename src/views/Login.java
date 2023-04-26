@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.UsuarioController;
-import modelo.Usuarios;
 
 import java.awt.Color;
 import javax.swing.JLabel;

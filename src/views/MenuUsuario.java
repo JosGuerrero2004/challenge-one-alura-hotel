@@ -6,13 +6,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseMotionAdapter;
@@ -158,7 +155,9 @@ public class MenuUsuario extends JFrame {
 		btnexit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
+				Login login = new Login();
+				login.setVisible(true);
+				dispose();
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -190,13 +189,13 @@ public class MenuUsuario extends JFrame {
 	    panelFecha.setLayout(null);
 	    
 	    JLabel lblNewLabel_1 = new JLabel("Sistema de reservas Hotel Alura");
-	    lblNewLabel_1.setBounds(165, 11, 379, 42);
+	    lblNewLabel_1.setBounds(152, 12, 379, 42);
 	    panelFecha.add(lblNewLabel_1);
 	    lblNewLabel_1.setForeground(Color.WHITE);
 	    lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 24));
 	    
 	    JLabel labelFecha = new JLabel("New label");
-	    labelFecha.setBounds(35, 64, 320, 36);
+	    labelFecha.setBounds(181, 66, 320, 36);
 	    panelFecha.add(labelFecha);
 	    labelFecha.setForeground(Color.WHITE);
 	    labelFecha.setFont(new Font("Roboto", Font.PLAIN, 33));
@@ -229,7 +228,7 @@ public class MenuUsuario extends JFrame {
 	    
 	    JLabel lblNewLabel_3_1 = new JLabel("- Edición de Reservas y Huéspedes existentes");
 	    lblNewLabel_3_1.setFont(new Font("Roboto", Font.PLAIN, 17));
-	    lblNewLabel_3_1.setBounds(312, 482, 355, 27);
+	    lblNewLabel_3_1.setBounds(312, 482, 385, 27);
 	    contentPane.add(lblNewLabel_3_1);
 	    
 	    JLabel lblNewLabel_3_2 = new JLabel("- Eliminar todo tipo de registros");
