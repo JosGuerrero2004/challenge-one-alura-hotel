@@ -11,6 +11,10 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
+
+import controller.ReservaController;
+import modelo.Reservas;
+
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -301,7 +305,7 @@ public class ReservasView extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null) {
-					RegistroHuesped registro = new RegistroHuesped();
+					RegistroHuesped registro = new RegistroHuesped(guardar());
 					registro.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
@@ -355,6 +359,23 @@ public class ReservasView extends JFrame {
 	private int diasEntre(Date checkIn, Date checkOut) {
 		int dias = (int) (checkOut.getTime() - checkIn.getTime()) / 86400000;
 		return dias;
+	}
+	
+	private Integer guardar() {
+		String valString = txtValor.getText().substring(2);
+		BigDecimal valor = new BigDecimal(valString);
+		java.sql.Date checkIn = new java.sql.Date(txtFechaEntrada.getDate().getTime());
+		java.sql.Date checkOut = new java.sql.Date(txtFechaSalida.getDate().getTime());
+		
+		Reservas reserva = new Reservas(
+				checkIn, checkOut, valor, txtFormaPago.getSelectedItem().toString());
+		ReservaController reservaController = new ReservaController();
+		
+		Integer idReserva = reservaController.guardar(reserva);
+		
+		JOptionPane.showMessageDialog(this, "Registrado con éxito!");
+		
+		return idReserva;
 	}
 	
 }

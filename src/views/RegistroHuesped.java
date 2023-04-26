@@ -7,20 +7,17 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import java.awt.Color;
 import com.toedter.calendar.JDateChooser;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import java.awt.SystemColor;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.text.Format;
-import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
@@ -38,6 +35,8 @@ public class RegistroHuesped extends JFrame {
 	private JLabel labelExit;
 	private JLabel labelAtras;
 	int xMouse, yMouse;
+	
+	private Integer idReserva;
 
 	/**
 	 * Launch the application.
@@ -46,7 +45,7 @@ public class RegistroHuesped extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RegistroHuesped frame = new RegistroHuesped();
+					RegistroHuesped frame = new RegistroHuesped(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,8 +56,12 @@ public class RegistroHuesped extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param reservas 
 	 */
-	public RegistroHuesped() {
+	public RegistroHuesped(Integer idReserva) {
+		this.idReserva = idReserva;
+		
+		System.out.println(idReserva);
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuesped.class.getResource("/imagenes/lOGO-50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -147,7 +150,7 @@ public class RegistroHuesped extends JFrame {
 		txtFechaN.setDateFormatString("yyyy-MM-dd");
 		contentPane.add(txtFechaN);
 		
-		txtNacionalidad = new JComboBox();
+		txtNacionalidad = new JComboBox<Format>();
 		txtNacionalidad.setBounds(560, 350, 289, 36);
 		txtNacionalidad.setBackground(SystemColor.text);
 		txtNacionalidad.setFont(new Font("Roboto", Font.PLAIN, 16));
