@@ -15,7 +15,7 @@ public class ConnectionFactory {
 	public ConnectionFactory() {
 		ComboPooledDataSource pooledDataSource = new ComboPooledDataSource();
 		
-		pooledDataSource.setJdbcUrl("jdbc:mysql://localhost/alura-hotel?useTimeZone=true&serverTimeZone=UTC");
+		pooledDataSource.setJdbcUrl("jdbc:mysql://localhost/ALURA-HOTEL?useTimeZone=true&serverTimeZone=UTC");
 		pooledDataSource.setUser("root");
 		pooledDataSource.setPassword("ADMIN123");
 		pooledDataSource.setMaxPoolSize(10);

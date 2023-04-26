@@ -10,6 +10,7 @@
 	<classpathentry kind="lib" path="/home/josias/Descargas/jcalendar-1.4/lib/jgoodies-common-1.2.0.jar"/>
 	<classpathentry kind="lib" path="/home/josias/Descargas/jcalendar-1.4/lib/jgoodies-looks-2.4.1.jar"/>
 	<classpathentry kind="lib" path="/home/josias/Descargas/jcalendar-1.4/lib/junit-4.6.jar"/>
+	<classpathentry kind="lib" path="/run/user/1000/doc/c3c28e0b/mysql-connector-j-8.0.33.jar"/>
 	<classpathentry kind="lib" path="/home/josias/Descargas/c3p0-0.9.5.5/lib/c3p0-0.9.5.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

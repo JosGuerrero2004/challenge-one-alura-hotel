@@ -23,6 +23,7 @@ public class Pruebas {
 			dataSource.getConnection();
 			
 			dataSource.close();
+			
 
 		} catch(SQLException e) {
 			e.printStackTrace();
