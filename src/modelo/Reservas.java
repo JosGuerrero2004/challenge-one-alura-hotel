@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 public class Reservas {
-	Integer id;
-	Date checkIn, checkOut;
-	BigDecimal valor;
-	String formaPago;
+	private Integer id;
+	private Date checkIn, checkOut;
+	private BigDecimal valor;
+	private String formaPago;
 	
 	public Reservas(Date checkIn, Date checkOut, BigDecimal valor, String formaPago) {
 		this.checkIn = checkIn;
