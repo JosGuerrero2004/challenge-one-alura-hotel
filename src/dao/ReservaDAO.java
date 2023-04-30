@@ -70,6 +70,32 @@ public class ReservaDAO {
 		}
 	}
 
+	public List<Reservas> buscarId(Integer id) {
+		List<Reservas> resultado = new ArrayList<>();
+		
+		try {
+			final PreparedStatement statement = con.prepareStatement(
+					"SELECT id, check_in, check_out, valor, forma_pago"
+					+ " FROM reservas "
+					+ "WHERE id = ?");
+			try (statement) {
+				statement.setInt(1, id);
+				statement.execute();
+				
+				final ResultSet resultSet = statement.getResultSet();
+				
+				try (resultSet) {
+					resultToList(resultado, resultSet);
+				}
+			}
+			return resultado;
+		} catch (SQLException e) {
+			throw new RuntimeException();
+		}
+	}
+	
+	
+	
 	private void resultToList(List<Reservas> resultado, final ResultSet resultSet) throws SQLException {
 		while(resultSet.next()) {
 			Reservas fila = new Reservas(resultSet.getInt(1),
@@ -81,4 +107,5 @@ public class ReservaDAO {
 			resultado.add(fila);
 		}
 	}
+	
 }

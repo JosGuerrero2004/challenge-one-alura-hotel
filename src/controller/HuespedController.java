@@ -14,10 +14,18 @@ public class HuespedController {
 	}
 	
 	public void guardar(Huespedes huesped) {
-		huespedDAO.guardar(huesped);
+		this.huespedDAO.guardar(huesped);
 	}
 
 	public List<Huespedes> listar() {
-		return huespedDAO.listar();
+		return this.huespedDAO.listar();
+	}
+
+	public List<Huespedes> buscarId(int id) {
+		return this.huespedDAO.buscarId(id);
+	}
+
+	public List<Huespedes> buscarApellido(String apellido) {
+		return this.huespedDAO.buscarApellido(apellido);
 	}
 }

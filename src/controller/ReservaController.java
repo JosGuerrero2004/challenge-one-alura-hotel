@@ -21,4 +21,8 @@ public class ReservaController {
 		return reservaDAO.listar();
 	}
 
+	public List<Reservas> buscarId(int id) {
+		return reservaDAO.buscarId(id);
+	}
+
 }

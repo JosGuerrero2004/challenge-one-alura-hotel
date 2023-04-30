@@ -71,6 +71,54 @@ public class HuespedDAO {
 			throw new RuntimeException();
 		}
 	}
+	
+	public List<Huespedes> buscarId(Integer id) {
+		List<Huespedes> resultado = new ArrayList<>();
+		
+		try {
+			final PreparedStatement statement = con.prepareStatement(
+					"SELECT id, nombre, apellido, fecha_nacimiento, nacionalidad, telefono, id_reserva"
+					+ " FROM huespedes WHERE "
+					+ "id = ?");
+			try (statement) {
+				statement.setInt(1, id);
+				statement.execute();
+				
+				final ResultSet resultSet = statement.getResultSet();
+				
+				try (resultSet) {
+					resultToList(resultado, resultSet);
+				}
+			}
+			return resultado;
+		} catch (SQLException e) {
+			throw new RuntimeException();
+		}
+	}
+	
+	public List<Huespedes> buscarApellido(String apellido) {
+		List<Huespedes> resultado = new ArrayList<>();
+		
+		try {
+			final PreparedStatement statement = con.prepareStatement(
+					"SELECT id, nombre, apellido, fecha_nacimiento, nacionalidad, telefono, id_reserva"
+					+ " FROM huespedes WHERE "
+					+ "apellido = ?");
+			try (statement) {
+				statement.setString(1, apellido);
+				statement.execute();
+				
+				final ResultSet resultSet = statement.getResultSet();
+				
+				try (resultSet) {
+					resultToList(resultado, resultSet);
+				}
+			}
+			return resultado;
+		} catch (SQLException e) {
+			throw new RuntimeException();
+		}
+	}
 
 	private void resultToList(List<Huespedes> resultado, final ResultSet resultSet) throws SQLException {
 		while (resultSet.next()) {

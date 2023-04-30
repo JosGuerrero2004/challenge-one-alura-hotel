@@ -5,10 +5,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
 import controller.HuespedController;
 import controller.ReservaController;
+import modelo.Huespedes;
+import modelo.Reservas;
 
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -24,6 +28,7 @@ import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class Busqueda extends JFrame {
@@ -125,6 +130,16 @@ public class Busqueda extends JFrame {
 				scroll_tableHuespedes, null);
 		scroll_tableHuespedes.setVisible(true);
 		
+		panel.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				limpiarTablas();
+				cargarTabla();
+			}
+		});
+		
+		limpiarTablas();
 		cargarTabla();
 		
 
@@ -228,7 +243,8 @@ public class Busqueda extends JFrame {
 		btnbuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
+				limpiarTablas();
+				buscar();
 			}
 		});
 		btnbuscar.setLayout(null);
@@ -293,9 +309,42 @@ public class Busqueda extends JFrame {
 //	}
 	
 	private void cargarTabla() {		
-		var reservas = this.reservaController.listar();
-		var huespedes = this.huespedController.listar();
+		if (panel.getSelectedIndex() == 0) {
+			var reservas = this.reservaController.listar();
+			
+			llenarReserva(reservas);
+		} else {
+			var huespedes = this.huespedController.listar();
+			
+			llenarHuesped(huespedes);
+		}
+	}
 
+	private void limpiarTablas() {
+		modelo.getDataVector().clear();
+		modeloHuesped.getDataVector().clear();
+	}
+	
+	private void buscar() {
+		String texto = txtBuscar.getText();
+		try {
+		    int id = Integer.parseInt(texto);
+		    
+		    if (panel.getSelectedIndex() == 0) {
+				var reservas = this.reservaController.buscarId(id);
+				llenarReserva(reservas);
+			} else {
+				var huespedes = this.huespedController.buscarId(id);
+				llenarHuesped(huespedes);
+			}
+		    // El valor es un número entero
+		} catch (NumberFormatException e) {
+			var huespedes = this.huespedController.buscarApellido(texto);
+			llenarHuesped(huespedes);
+		}
+	}
+	
+	private void llenarReserva(List<Reservas> reservas) {
 		reservas.forEach(reserva -> modelo.addRow(
 				new Object[] {
 						reserva.getId(),
@@ -304,7 +353,9 @@ public class Busqueda extends JFrame {
 						reserva.getValor(),
 						reserva.getFormaPago()
 				}));
-		
+	}
+	
+	private void llenarHuesped(List<Huespedes> huespedes) {
 		huespedes.forEach(huesped -> modeloHuesped.addRow(
 				new Object[] {
 						huesped.getId(),
@@ -316,5 +367,4 @@ public class Busqueda extends JFrame {
 						huesped.getIdReserva()
 				}));
 	}
-	
 }
