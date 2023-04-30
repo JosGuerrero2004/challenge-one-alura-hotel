@@ -16,6 +16,14 @@ public class Reservas {
 		this.formaPago = formaPago;
 	}
 	
+	public Reservas(int id, Date checkIn, Date checkOut, BigDecimal valor, String formaPago) {
+		this.id = id;
+		this.checkIn = checkIn;
+		this.checkOut = checkOut;
+		this.valor = valor;
+		this.formaPago = formaPago;
+	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}

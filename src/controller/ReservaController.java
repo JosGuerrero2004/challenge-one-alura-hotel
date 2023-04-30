@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.List;
+
 import dao.ReservaDAO;
 import factory.ConnectionFactory;
 import modelo.Reservas;
@@ -13,6 +15,10 @@ public class ReservaController {
 
 	public Integer guardar(Reservas reserva) {
 		return reservaDAO.guardar(reserva);
+	}
+	
+	public List<Reservas> listar(){
+		return reservaDAO.listar();
 	}
 
 }
