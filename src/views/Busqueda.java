@@ -81,6 +81,7 @@ public class Busqueda extends JFrame {
 		setUndecorated(true);
 
 		txtBuscar = new JTextField();
+		txtBuscar.setToolTipText("Ingrese apellido o el id del registro.");
 		txtBuscar.setBounds(536, 127, 193, 31);
 		txtBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		contentPane.add(txtBuscar);
