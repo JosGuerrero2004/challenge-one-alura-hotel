@@ -348,6 +348,8 @@ public class ReservasView extends JFrame {
 		if (txtFechaEntrada.getDate() != null && txtFechaSalida.getDate() != null) {
 			int dias = diasEntre(txtFechaEntrada.getDate(), txtFechaSalida.getDate());
 			
+			System.out.println(dias);
+			
 			Double total = reserva * dias;
 			
 			txtValor.setText("$ " + total.toString());
@@ -357,7 +359,8 @@ public class ReservasView extends JFrame {
 	//retorna los dias entre dos fechas
 	
 	private int diasEntre(Date checkIn, Date checkOut) {
-		int dias = (int) (checkOut.getTime() - checkIn.getTime()) / 86400000;
+		Long difMilis = checkOut.getTime() - checkIn.getTime();
+		int dias = (int) (difMilis / 86400000);
 		return dias;
 	}
 	
