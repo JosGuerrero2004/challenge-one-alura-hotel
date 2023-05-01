@@ -44,7 +44,7 @@ public class ReservaDAO {
 				}
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -90,7 +90,7 @@ public class ReservaDAO {
 			}
 			return resultado;
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -113,7 +113,28 @@ public class ReservaDAO {
 				return statement.getUpdateCount();
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e);
+		}
+	}
+
+	public int eliminar(Integer id) {
+		try {
+			final PreparedStatement statement = con.prepareStatement(
+					"DELETE FROM huespedes WHERE id_reserva = ?");
+			final PreparedStatement statement2 = con.prepareStatement(
+				    "DELETE FROM reservas WHERE id = ?");
+			
+			try (statement; statement2) {
+				statement.setInt(1, id);
+				statement2.setInt(1, id);
+				
+				statement.execute();
+				statement2.execute();
+
+				return statement.getUpdateCount() + statement2.getUpdateCount();
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -128,5 +149,4 @@ public class ReservaDAO {
 			resultado.add(fila);
 		}
 	}
-
 }

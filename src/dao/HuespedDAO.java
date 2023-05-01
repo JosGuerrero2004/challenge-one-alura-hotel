@@ -46,7 +46,7 @@ public class HuespedDAO {
 				}
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -68,7 +68,7 @@ public class HuespedDAO {
 			}
 			return resultado;
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -92,7 +92,7 @@ public class HuespedDAO {
 			}
 			return resultado;
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -116,22 +116,7 @@ public class HuespedDAO {
 			}
 			return resultado;
 		} catch (SQLException e) {
-			throw new RuntimeException();
-		}
-	}
-
-	private void resultToList(List<Huespedes> resultado, final ResultSet resultSet) throws SQLException {
-		while (resultSet.next()) {
-			Huespedes fila = new Huespedes(
-					resultSet.getInt("id"),
-					resultSet.getString("nombre"),
-					resultSet.getString("apellido"),
-					resultSet.getDate("fecha_nacimiento"),
-					resultSet.getString("nacionalidad"),
-					resultSet.getString("telefono"),
-					resultSet.getInt("id_reserva"));
-			
-			resultado.add(fila);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -157,7 +142,38 @@ public class HuespedDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException();
+			throw new RuntimeException(e);
+		}
+	}
+
+	public int eliminar(Integer id) {
+		try {
+			final PreparedStatement statement = con.prepareStatement(
+					"DELETE FROM huespedes WHERE id = ?");
+			try (statement){
+				statement.setInt(1, id);
+				
+				statement.execute();
+				
+				return statement.getUpdateCount();
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void resultToList(List<Huespedes> resultado, final ResultSet resultSet) throws SQLException {
+		while (resultSet.next()) {
+			Huespedes fila = new Huespedes(
+					resultSet.getInt("id"),
+					resultSet.getString("nombre"),
+					resultSet.getString("apellido"),
+					resultSet.getDate("fecha_nacimiento"),
+					resultSet.getString("nacionalidad"),
+					resultSet.getString("telefono"),
+					resultSet.getInt("id_reserva"));
+			
+			resultado.add(fila);
 		}
 	}
 }

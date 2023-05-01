@@ -236,7 +236,6 @@ public class RegistroHuesped extends JFrame {
 		contentPane.add(lblNumeroReserva);
 
 		txtNreserva = new JTextField();
-		txtNreserva.setEditable(false);
 		txtNreserva.setFont(new Font("Roboto", Font.PLAIN, 16));
 		txtNreserva.setBounds(560, 495, 285, 33);
 		txtNreserva.setColumns(10);
