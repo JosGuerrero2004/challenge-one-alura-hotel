@@ -134,4 +134,30 @@ public class HuespedDAO {
 			resultado.add(fila);
 		}
 	}
+
+	public int editar(Huespedes huespedModificado) {
+		try {
+			final PreparedStatement statement = con.prepareStatement(
+					"UPDATE huespedes "
+					+ "SET nombre = ?, apellido = ?, fecha_nacimiento = ?, nacionalidad = ?, telefono = ?, id_reserva = ?"
+					+ " WHERE id = ?");
+			
+			try (statement) {
+				statement.setString(1, huespedModificado.getNombre());
+				statement.setString(2, huespedModificado.getApellido());
+				statement.setDate(3, huespedModificado.getFechaDeNacimiento());
+				statement.setString(4, huespedModificado.getNacionalidad());
+				statement.setString(5, huespedModificado.getTelefono());
+				statement.setInt(6, huespedModificado.getIdReserva());
+				statement.setInt(7, huespedModificado.getId());
+				
+				statement.execute();
+				
+				return statement.getUpdateCount();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+	}
 }

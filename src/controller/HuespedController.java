@@ -28,4 +28,8 @@ public class HuespedController {
 	public List<Huespedes> buscarApellido(String apellido) {
 		return this.huespedDAO.buscarApellido(apellido);
 	}
+
+	public int editar(Huespedes huespedModificado) {
+		return this.huespedDAO.editar(huespedModificado);
+	}
 }

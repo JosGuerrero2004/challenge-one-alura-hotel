@@ -25,4 +25,8 @@ public class ReservaController {
 		return reservaDAO.buscarId(id);
 	}
 
+	public int editar(Reservas reservaModificada) {
+		return this.reservaDAO.editar(reservaModificada);
+	}
+
 }

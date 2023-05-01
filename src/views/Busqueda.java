@@ -19,6 +19,8 @@ import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTabbedPane;
 import java.awt.Toolkit;
@@ -28,7 +30,12 @@ import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Optional;
 
 @SuppressWarnings("serial")
 public class Busqueda extends JFrame {
@@ -45,6 +52,7 @@ public class Busqueda extends JFrame {
 	private JTabbedPane panel;
 	private ReservaController reservaController;
 	private HuespedController huespedController;
+	private SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
 
 	/**
 	 * Launch the application.
@@ -241,6 +249,10 @@ public class Busqueda extends JFrame {
 		contentPane.add(separator_1_2);
 
 		JPanel btnbuscar = new JPanel();
+		btnbuscar.setLayout(null);
+		btnbuscar.setBackground(new Color(12, 138, 199));
+		btnbuscar.setBounds(748, 125, 122, 35);
+		btnbuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		btnbuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -248,10 +260,6 @@ public class Busqueda extends JFrame {
 				buscar();
 			}
 		});
-		btnbuscar.setLayout(null);
-		btnbuscar.setBackground(new Color(12, 138, 199));
-		btnbuscar.setBounds(748, 125, 122, 35);
-		btnbuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		contentPane.add(btnbuscar);
 
 		JLabel lblBuscar = new JLabel("BUSCAR");
@@ -261,11 +269,19 @@ public class Busqueda extends JFrame {
 		lblBuscar.setForeground(Color.WHITE);
 		lblBuscar.setFont(new Font("Roboto", Font.PLAIN, 18));
 
-		JPanel btnEditar = new JPanel();
+		JPanel btnEditar =  new JPanel();
 		btnEditar.setLayout(null);
 		btnEditar.setBackground(new Color(12, 138, 199));
 		btnEditar.setBounds(635, 508, 122, 35);
 		btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnEditar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				editar();
+				limpiarTablas();
+				cargarTabla();
+			}
+		});
 		contentPane.add(btnEditar);
 
 		JLabel lblEditar = new JLabel("EDITAR");
@@ -304,28 +320,8 @@ public class Busqueda extends JFrame {
 	}
 	
 	//Funciones del formulario
-	//TODO
-//	private boolean tieneFilaElegida() {
-//		return panel.getSelectedRowCount() == 0 || tabla.getSelectedColumnCount() == 0;
-//	}
 	
-	private void cargarTabla() {		
-		if (panel.getSelectedIndex() == 0) {
-			var reservas = this.reservaController.listar();
-			
-			llenarReserva(reservas);
-		} else {
-			var huespedes = this.huespedController.listar();
-			
-			llenarHuesped(huespedes);
-		}
-	}
-
-	private void limpiarTablas() {
-		modelo.getDataVector().clear();
-		modeloHuesped.getDataVector().clear();
-	}
-	
+		//Funciones de bd:
 	private void buscar() {
 		String texto = txtBuscar.getText();
 		try {
@@ -342,7 +338,79 @@ public class Busqueda extends JFrame {
 		} catch (NumberFormatException e) {
 			var huespedes = this.huespedController.buscarApellido(texto);
 			llenarHuesped(huespedes);
+			//el valor es una cadena de texto
 		}
+	}
+	
+	private void editar() {
+		
+		
+		if(panel.getSelectedIndex() == 0) {
+			if(tieneFilaElegidaReservas()) {
+				JOptionPane.showMessageDialog(this, "Por favor, elije un item");
+				return;
+			}
+			
+			Optional.ofNullable(modelo.getValueAt(tbReservas.getSelectedRow(), tbReservas.getSelectedColumn()))
+					.ifPresentOrElse(fila -> {
+						Integer id = Integer.parseInt(modelo.getValueAt(tbReservas.getSelectedRow(), 0).toString());
+						
+						Date checkIn = new Date(parseDateLong(modelo.getValueAt(tbReservas.getSelectedRow(), 1).toString()));
+						Date checkOut = new Date(parseDateLong(modelo.getValueAt(tbReservas.getSelectedRow(), 2).toString()));
+						
+						BigDecimal valor = new BigDecimal(modelo.getValueAt(tbReservas.getSelectedRow(), 3).toString());
+						String formaPago = modelo.getValueAt(tbReservas.getSelectedRow(), 4).toString();
+						
+						Reservas reservaModificada = new Reservas(id, checkIn, checkOut, valor, formaPago);
+						
+						int cantidadModificada = this.reservaController.editar(reservaModificada);
+						
+						JOptionPane.showMessageDialog(this, cantidadModificada + " Item modificado con éxito!");
+					}, () -> JOptionPane.showMessageDialog(this, "Por favor, elije un item"));
+		} else {
+			if(tieneFilaElegidaHuespedes()) {
+				JOptionPane.showMessageDialog(this, "Por favor, elije un item");
+				return;
+			}
+			
+			Optional.ofNullable(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), tbHuespedes.getSelectedColumn()))
+					.ifPresentOrElse(fila -> {
+						Integer id = Integer.parseInt(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 0).toString());
+						String nombre = modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 1).toString();
+						String apellido = modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 2).toString();
+						
+						Date fechaNa = new Date(parseDateLong(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 3).toString()));
+						
+						String nacionalidad = modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 4).toString();
+						String telefono = modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 5).toString();
+						Integer idReserva = Integer.parseInt(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 6).toString());
+						
+						Huespedes huespedModificado = new Huespedes(id, nombre, apellido, fechaNa, nacionalidad, telefono, idReserva);
+						
+						int cantidadModificada = this.huespedController.editar(huespedModificado);
+						
+						JOptionPane.showMessageDialog(this, cantidadModificada + " Item modificado con éxito!");
+					}, () -> JOptionPane.showMessageDialog(this, "Por favor, elije un item"));
+		}
+	}
+
+	private void cargarTabla() {		
+		if (panel.getSelectedIndex() == 0) {
+			var reservas = this.reservaController.listar();
+			
+			llenarReserva(reservas);
+		} else {
+			var huespedes = this.huespedController.listar();
+			
+			llenarHuesped(huespedes);
+		}
+	}
+
+	//funciones del form
+	
+	private void limpiarTablas() {
+		modelo.getDataVector().clear();
+		modeloHuesped.getDataVector().clear();
 	}
 	
 	private void llenarReserva(List<Reservas> reservas) {
@@ -367,5 +435,25 @@ public class Busqueda extends JFrame {
 						huesped.getTelefono(),
 						huesped.getIdReserva()
 				}));
+	}
+	
+	private boolean tieneFilaElegidaHuespedes() {
+		return tbHuespedes.getSelectedRowCount() == 0 || tbHuespedes.getSelectedColumnCount() == 0;
+	}
+	
+	private boolean tieneFilaElegidaReservas() {
+		return tbReservas.getSelectedRowCount() == 0 || tbReservas.getSelectedColumnCount() == 0;
+	}
+	
+
+	private Long parseDateLong(String date) {
+		java.util.Date checkInUtil;
+		try {
+			checkInUtil = formatoFecha.parse(date);
+			return checkInUtil.getTime();
+		} catch (ParseException e) {
+			throw new RuntimeException();
+		}
+		
 	}
 }

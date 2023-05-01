@@ -94,7 +94,28 @@ public class ReservaDAO {
 		}
 	}
 	
-	
+	public int editar(Reservas reservaModificada) {
+		try {
+			final PreparedStatement statement = con.prepareStatement(
+					"UPDATE reservas "
+					+ "SET check_in = ?, check_out = ?, valor = ?, forma_pago = ?"
+					+ "WHERE id = ?");
+			
+			try (statement) {
+				statement.setDate(1, reservaModificada.getCheckIn());
+				statement.setDate(2, reservaModificada.getCheckOut());
+				statement.setBigDecimal(3, reservaModificada.getValor());
+				statement.setString(4, reservaModificada.getFormaPago());
+				statement.setInt(5, reservaModificada.getId());
+				
+				statement.execute();
+				
+				return statement.getUpdateCount();
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException();
+		}
+	}
 	
 	private void resultToList(List<Reservas> resultado, final ResultSet resultSet) throws SQLException {
 		while(resultSet.next()) {
@@ -107,5 +128,5 @@ public class ReservaDAO {
 			resultado.add(fila);
 		}
 	}
-	
+
 }
