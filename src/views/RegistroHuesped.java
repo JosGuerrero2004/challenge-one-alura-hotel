@@ -63,6 +63,7 @@ public class RegistroHuesped extends JFrame {
 	public RegistroHuesped(Integer idReserva) {
 		this();
 		this.idReserva = idReserva;
+		txtNreserva.setText(this.idReserva.toString());
 	}
 
 	/**
